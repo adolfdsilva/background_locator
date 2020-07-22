@@ -131,9 +131,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     _locationManager = [[CLLocationManager alloc] init];
     [_locationManager setDelegate:self];
     _locationManager.pausesLocationUpdatesAutomatically = NO;
-    var bgLocation = false;
-    if let bgModes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? Array<String> {
-       bgLocation = bgModes.contains("location")
+    Boolean bgLocation = false;
+    NSArray *bgModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+    if (bgModes != nil && bgModes.count >0) {
+        bgLocation = [bgModes containsObject:@"location"];
     }
     if (bgLocation && @available(iOS 9.0, *)) {
         _locationManager.allowsBackgroundLocationUpdates = YES;
